@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Agent.h"
 #include "../Zone/SearchZone.h"
+#include "EnvironmentQuery/EnvQuery.h"
+#include "Math/Vector.h"
 #include "SquadManager.generated.h"
 
 UENUM(BlueprintType)
@@ -49,7 +51,62 @@ public:
 	//void AssignTask(ASquadAgent* agent, Task task);
 
 	
+	UPROPERTY()
+	UEnvQuery* FirstNodeQuery;
+	UPROPERTY()
+	UEnvQuery* SecondNodeQuery;
+
+	UFUNCTION(BlueprintCallable)
+	FVector ChooseFirstNode();
+
+	UFUNCTION(BlueprintCallable)
+	FVector ChooseSubsequentNode();
+	
+	
 };
+
+
+//start
+//if agents are not in zone move them all to accessible zone
+
+//once in zone set as the active area
+//choose first node in zone
+//first node should prefer being more being more to the side and as far away as possible
+
+
+//can choose an eqs query in editor UEnvQuery* MyQuery;
+//should return a vector instead of the node itself to avoid ai_move_to weirdness
+//should prefer nodes in same general area(unreal trace should be good enough)
+//currently targeted nodes should be kept in a list
+
+//choose more nodes until all agents have a target
+//subsequent search nodes should prioritize distance away from all other currently targeted nodes
+//should prefer nodes in same general area(unreal trace should be good enough)
+
+
+//when encountering obstacles
+//obstacles should have a priority
+
+//critical priority will immediately stop search for current node to clear obstacle
+//(mainly if the obstacle prevent access to the node)
+//if needed will call for other agents- priority will also determine if they should abandon current task
+
+//high priority will add to list of active obstacles and will wait until current task is complete
+//medium priority will wait until all other obstacle are clear
+//low priority will wait until all other tasks are done(probably when a zone is cleared and a new zone is needed)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //1 clear all possible nodes in current zone

@@ -38,3 +38,5 @@ void ASearchZone::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+
+

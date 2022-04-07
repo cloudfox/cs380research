@@ -3,6 +3,8 @@
 
 #include "SquadManager.h"
 
+#include "Tasks/AITask_RunEQS.h"
+
 
 // Sets default values
 ASquadManager::ASquadManager()
@@ -22,6 +24,21 @@ void ASquadManager::BeginPlay()
 void ASquadManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+FVector ASquadManager::ChooseFirstNode()
+{
+
+
+	
+	return {};
+}
+
+FVector ASquadManager::ChooseSubsequentNode()
+{
+
+	
+	return {};
 }
 
  
