@@ -61,7 +61,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector ChooseSubsequentNode();
-	
+
+	//void MoveToQueryResult(TSharedPtr<FEnvQueryResult> result);
 	
 };
 

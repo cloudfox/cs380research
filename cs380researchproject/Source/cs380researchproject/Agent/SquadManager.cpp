@@ -3,6 +3,7 @@
 
 #include "SquadManager.h"
 
+#include "EnvironmentQuery/EnvQueryManager.h"
 #include "Tasks/AITask_RunEQS.h"
 
 
@@ -29,7 +30,22 @@ void ASquadManager::Tick(float DeltaTime)
 FVector ASquadManager::ChooseFirstNode()
 {
 
+	//FirstNodeQuery->CollectQueryParams()
+	//UAITask_RunEQS(agent, FirstNodeQuery);
 
+	//this is the one I think //FEnvQueryRequest
+
+	//FEnvQueryRequest should probably be move outside
+	//might not even need this function a should just move this into the main HTN loop
+	//or combine the 2 node functions into just one that returns the relevant query
+	//
+	//FEnvQueryRequest FirstNodeQ = FEnvQueryRequest(FirstNodeQuery, this);
+	//FirstNodeQ.Execute(EEnvQueryRunMode::SingleResult, this, &AMyAIController::MoveToQueryResult);
+
+	// if (result->IsSuccsessful()) {
+	// 	MoveToLocation(result->GetItemAsLocation(0));
+	// }
+	
 	
 	return {};
 }
