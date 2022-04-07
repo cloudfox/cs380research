@@ -32,16 +32,7 @@ public:
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<ASightNode*> SearchNodes;
-	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float width = 500;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float depth = 500;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float height = 500;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float spacing = 100;
+	TArray<AActor*> SearchNodes;
 	
 	
 };

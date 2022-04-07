@@ -7,10 +7,7 @@
 // Sets default values
 ASearchZone::ASearchZone()
 {
-	const int widthCount = (width/spacing);
-	const int heightCount = (height/spacing);
-	
-	SearchNodesCount = widthCount * heightCount;
+
 
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;

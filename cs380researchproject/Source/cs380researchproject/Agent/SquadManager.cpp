@@ -24,3 +24,4 @@ void ASquadManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+ 

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "SquadAgent.h"
+#include "Agent.h"
 #include "../Zone/SearchZone.h"
 #include "SquadManager.generated.h"
 
@@ -38,7 +38,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
 	TEnumAsByte<WorldState> worldState;
 
-	TArray<ASquadAgent*> agents;
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	TArray<ASearchZone*> Zones;
 	//TArray<Obstacle*> Obstacles;
 	
