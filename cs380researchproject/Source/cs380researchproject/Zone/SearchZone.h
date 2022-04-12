@@ -25,6 +25,8 @@ protected:
 	
 	int SearchNodesCount = 0;
 	int searchNodesFound = 0;
+
+	bool IsCleared();
 	
 public:
 	// Called every frame
@@ -33,6 +35,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<AActor*> SearchNodes;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int NodeCount;
 	
 	
 };

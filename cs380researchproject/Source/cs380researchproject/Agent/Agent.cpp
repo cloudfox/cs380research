@@ -3,6 +3,9 @@
 
 #include "Agent.h"
 
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Blueprint/AIBlueprintHelperLibrary.h"
+
 
 // Sets default values
 AAgent::AAgent()
@@ -29,7 +32,6 @@ AAgent::AAgent()
 void AAgent::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -42,5 +44,26 @@ void AAgent::Tick(float DeltaTime)
 void AAgent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AAgent::NodeQueryFinished(TSharedPtr<FEnvQueryResult> Result)
+{
+	FVector ZonePosition = Result->GetItemAsLocation(0);
+	SetTarget(ZonePosition);
+}
+
+void AAgent::SetTarget(FVector& Position)
+{
+	TargetPosition = Position;
+	UBlackboardComponent* blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	blackboard->SetValueAsVector("Location", Position);
+}
+
+void AAgent::SetTask(ETasks Task)
+{
+	CurrentTask = Task;
+	UBlackboardComponent* blackboard = UAIBlueprintHelperLibrary::GetBlackboard(this);
+	blackboard->SetValueAsEnum("CurrentTask", static_cast<uint8>(Task));
+	
 }
 

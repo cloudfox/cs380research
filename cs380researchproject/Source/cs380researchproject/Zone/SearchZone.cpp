@@ -32,11 +32,18 @@ void ASearchZone::BeginPlay()
 	
 }
 
+bool ASearchZone::IsCleared()
+{
+	return false;
+}
+
 // Called every frame
 void ASearchZone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+
 
 
 

@@ -7,6 +7,8 @@
 #include "Tasks/AITask_RunEQS.h"
 
 
+
+
 // Sets default values
 ASquadManager::ASquadManager()
 {
@@ -18,13 +20,39 @@ ASquadManager::ASquadManager()
 void ASquadManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	FEnvQueryRequest QueryRequest = FEnvQueryRequest(ZoneQuery, this);
+	QueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &ASquadManager::ZoneQueryFinished);
 }
+
+void ASquadManager::ZoneQueryFinished(TSharedPtr<FEnvQueryResult> Result)
+{
+	FVector ZonePosition = Result->GetItemAsLocation(0);
+	for(AAgent* agent : agents )
+	{
+		agent->SetTarget(ZonePosition);
+	}
+}
+
+
 
 // Called every frame
 void ASquadManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+
+void ASquadManager::EnteredFirstZone(ASearchZone* zone, AAgent* agent)
+{
+	if(CurrentZone == nullptr)
+	{
+		CurrentZone = zone;
+		CurrentWorldState = EWorldState::ZoneUncleared;
+	}
+
+	FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
+	QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+	
 }
 
 FVector ASquadManager::ChooseFirstNode()

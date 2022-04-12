@@ -11,13 +11,25 @@
 #include "SquadManager.generated.h"
 
 UENUM(BlueprintType)
-enum WorldState
+enum class EWorldState : uint8
 {
+	NotInZone UMETA(DisplayName = "NotInZone"),
 	ZoneUncleared UMETA(DisplayName = "Zone Not Cleared"),
 	ObstacleFound UMETA(DisplayName = "Obstacle Found"),
 	ZoneBlocked UMETA(DisplayName = "Next Zone Blocked"),
 	AllZonesCleared UMETA(DisplayName = "All Zones Cleared")
 };
+
+
+
+
+// USTRUCT(BlueprintType)
+// struct FWorldStateProperties
+// {
+// 	GENERATED_BODY()
+// 	bool ZoneClear;
+// 	TArray<AActor> Obstacles; 
+// };
 
 
 UCLASS()
@@ -33,29 +45,37 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void ZoneQueryFinished(TSharedPtr<FEnvQueryResult> Result);
+
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Status)
-	TEnumAsByte<WorldState> worldState;
+	EWorldState CurrentWorldState;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<ASearchZone*> Zones;
-	//TArray<Obstacle*> Obstacles;
-	
-	//void AddObstacle(Actor* Obstacle);
-
-	//TArray<TaskList>
-
-	//void AssignTask(ASquadAgent* agent, Task task);
-
-	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UEnvQuery* ZoneQuery;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UEnvQuery* FirstNodeQuery;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UEnvQuery* SecondNodeQuery;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AAgent*> agents;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ASearchZone* CurrentZone;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AActor*> AssignedNodes;
+
+
+
+	UFUNCTION(BlueprintCallable)
+	void EnteredFirstZone(ASearchZone* zone, AAgent* agent);
+	
 	UFUNCTION(BlueprintCallable)
 	FVector ChooseFirstNode();
 
@@ -65,6 +85,34 @@ public:
 	//void MoveToQueryResult(TSharedPtr<FEnvQueryResult> result);
 	
 };
+
+//start
+//move all agents to zone
+
+//assign search nodes to agents
+//might be able to use just one eqs for this
+
+//search task will repeat until a new task is assigned
+//if no more possible nodes switch to idle
+
+//on obstruction assign new tasks to agents to clear it
+//on clear check if zone has more nodes to search
+//reassign search tasks to all agents
+
+//on zone clear move to next zone
+//assign tasks to clear way to next zone
+
+
+//void AssignNode()
+//void AssignTask();
+//struct assigned tasks(task, priority)
+//array assignedTasks
+
+
+
+
+
+
 
 
 //start
