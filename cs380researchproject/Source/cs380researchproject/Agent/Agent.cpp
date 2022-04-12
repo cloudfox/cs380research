@@ -52,7 +52,8 @@ void AAgent::NodeQueryFinished(TSharedPtr<FEnvQueryResult> Result)
 {
 	FVector ZonePosition = Result->GetItemAsLocation(0);
 	ASightNode* TargetNode = static_cast<ASightNode*>(Result->GetItemAsActor(0));
-	//TargetNode->Targeted = true;
+	TargetNode->Targeted = true;
+	
 	
 	SetTarget(ZonePosition);
 	SetTask(ETasks::MoveToNode);

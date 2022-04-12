@@ -53,8 +53,17 @@ void ASquadManager::EnteredFirstZone(ASearchZone* zone, AAgent* agent)
 		CurrentWorldState = EWorldState::ZoneUncleared;
 	}
 
-	FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
-	QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+	if(agent->CurrentTask == ETasks::Wait)
+	{
+		FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
+		QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+
+
+		//FEnvQueryInstance QueryInstance;
+		//QueryInstance.PrepareContext()
+
+		
+	}
 }
 
 
