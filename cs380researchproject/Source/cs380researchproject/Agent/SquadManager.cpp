@@ -22,6 +22,8 @@ void ASquadManager::BeginPlay()
 	Super::BeginPlay();
 	FEnvQueryRequest QueryRequest = FEnvQueryRequest(ZoneQuery, this);
 	QueryRequest.Execute(EEnvQueryRunMode::SingleResult, this, &ASquadManager::ZoneQueryFinished);
+	
+	
 }
 
 void ASquadManager::ZoneQueryFinished(TSharedPtr<FEnvQueryResult> Result)
@@ -30,6 +32,7 @@ void ASquadManager::ZoneQueryFinished(TSharedPtr<FEnvQueryResult> Result)
 	for(AAgent* agent : agents )
 	{
 		agent->SetTarget(ZonePosition);
+		agent->SetTask(ETasks::MoveToZone);
 	}
 }
 
@@ -52,37 +55,6 @@ void ASquadManager::EnteredFirstZone(ASearchZone* zone, AAgent* agent)
 
 	FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
 	QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
-	
 }
 
-FVector ASquadManager::ChooseFirstNode()
-{
 
-	//FirstNodeQuery->CollectQueryParams()
-	//UAITask_RunEQS(agent, FirstNodeQuery);
-
-	//this is the one I think //FEnvQueryRequest
-
-	//FEnvQueryRequest should probably be move outside
-	//might not even need this function a should just move this into the main HTN loop
-	//or combine the 2 node functions into just one that returns the relevant query
-	//
-	//FEnvQueryRequest FirstNodeQ = FEnvQueryRequest(FirstNodeQuery, this);
-	//FirstNodeQ.Execute(EEnvQueryRunMode::SingleResult, this, &AMyAIController::MoveToQueryResult);
-
-	// if (result->IsSuccsessful()) {
-	// 	MoveToLocation(result->GetItemAsLocation(0));
-	// }
-	
-	
-	return {};
-}
-
-FVector ASquadManager::ChooseSubsequentNode()
-{
-
-	
-	return {};
-}
-
- 

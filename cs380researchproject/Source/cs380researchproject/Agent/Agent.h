@@ -11,6 +11,7 @@
 #include "Agent.generated.h"
 
 class ASquadManager;
+class ASearchZone;
 
 UENUM()
 enum class ETasks: uint8
@@ -62,8 +63,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	ASquadManager* SquadManager;
-
-
+	
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	ASearchZone* CurrentZone;
 
 	UFUNCTION(BlueprintCallable)
 	void SetTarget(FVector& Position);

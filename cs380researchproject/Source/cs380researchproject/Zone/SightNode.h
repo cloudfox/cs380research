@@ -33,10 +33,13 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	ASearchZone* Parent;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool Targeted = false;
 	
 	UFUNCTION(BlueprintCallable)
 	bool Found();
-
+	
 
 	friend class ASearchZone;
 };

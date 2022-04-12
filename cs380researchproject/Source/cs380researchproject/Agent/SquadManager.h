@@ -21,8 +21,6 @@ enum class EWorldState : uint8
 };
 
 
-
-
 // USTRUCT(BlueprintType)
 // struct FWorldStateProperties
 // {
@@ -76,11 +74,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void EnteredFirstZone(ASearchZone* zone, AAgent* agent);
 	
-	UFUNCTION(BlueprintCallable)
-	FVector ChooseFirstNode();
-
-	UFUNCTION(BlueprintCallable)
-	FVector ChooseSubsequentNode();
 
 	//void MoveToQueryResult(TSharedPtr<FEnvQueryResult> result);
 	

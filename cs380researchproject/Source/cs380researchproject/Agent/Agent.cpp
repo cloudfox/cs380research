@@ -5,6 +5,8 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "../Zone/SightNode.h"
+#include "cs380researchproject/Zone/SightNode.h"
 
 
 // Sets default values
@@ -49,7 +51,12 @@ void AAgent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AAgent::NodeQueryFinished(TSharedPtr<FEnvQueryResult> Result)
 {
 	FVector ZonePosition = Result->GetItemAsLocation(0);
+	ASightNode* TargetNode = static_cast<ASightNode*>(Result->GetItemAsActor(0));
+	//TargetNode->Targeted = true;
+	
 	SetTarget(ZonePosition);
+	SetTask(ETasks::MoveToNode);
+	
 }
 
 void AAgent::SetTarget(FVector& Position)
