@@ -79,7 +79,11 @@ void ASquadManager::RequestNewTask(AAgent* agent)
 		if(CurrentZone->IsCleared())
 		{
 			//search for next zone
-			
+			for(AAgent* agent : agents)
+			{
+				FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
+				QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+			}
 		}
 		else
 		{
