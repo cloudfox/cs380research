@@ -67,13 +67,22 @@ public:
 	ASearchZone* CurrentZone;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<ASearchZone*> UnclearedZones;
+	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AActor*> AssignedNodes;
 
 
 
 	UFUNCTION(BlueprintCallable)
 	void EnteredFirstZone(ASearchZone* zone, AAgent* agent);
-	
+
+	UFUNCTION(BlueprintCallable)
+	void RequestNewTask(AAgent* agent);
+
+	UFUNCTION(BlueprintCallable)
+	void GoToNextZone();
 
 	//void MoveToQueryResult(TSharedPtr<FEnvQueryResult> result);
 	

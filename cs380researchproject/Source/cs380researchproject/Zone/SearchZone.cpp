@@ -3,6 +3,7 @@
 
 #include "SearchZone.h"
 #include "SightNode.h"
+#include "../Agent/SquadManager.h"
 
 // Sets default values
 ASearchZone::ASearchZone()
@@ -13,16 +14,12 @@ ASearchZone::ASearchZone()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void ASearchZone::SearchNodeFound()
+void ASearchZone::SearchNodeFound() const
 {
-	searchNodesFound += 1;
-
-	if(searchNodesFound >= SearchNodesCount)
+	if(IsCleared())
 	{
-		//report to squad manager that the zone is clear
-		
+		squadManager->GoToNextZone();
 	}
-	
 }
 
 // Called when the game starts or when spawned
@@ -32,9 +29,9 @@ void ASearchZone::BeginPlay()
 	
 }
 
-bool ASearchZone::IsCleared()
+bool ASearchZone::IsCleared() const
 {
-	return false;
+	return NodeCount <= 0;
 }
 
 // Called every frame

@@ -5,7 +5,7 @@
 
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "Tasks/AITask_RunEQS.h"
-
+#include "Containers/Array.h"
 
 
 
@@ -53,17 +53,52 @@ void ASquadManager::EnteredFirstZone(ASearchZone* zone, AAgent* agent)
 		CurrentWorldState = EWorldState::ZoneUncleared;
 	}
 
-	if(agent->CurrentTask == ETasks::Wait)
+	if((agent->CurrentTask == ETasks::Wait || agent->CurrentTask == ETasks::MoveToZone) && (agent->CurrentZone == CurrentZone))
 	{
 		FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
 		QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+	}
+}
+
+void ASquadManager::GoToNextZone()
+{
+	FVector ZonePosition = CurrentZone->GetActorLocation();
+	for(AAgent* agent : agents)
+	{
+		agent->SetTarget(ZonePosition);
+		agent->SetTask(ETasks::MoveToZone);
+	}
+}
 
 
-		//FEnvQueryInstance QueryInstance;
-		//QueryInstance.PrepareContext()
+void ASquadManager::RequestNewTask(AAgent* agent)
+{
+		
+	if(CurrentZone)
+	{
+		if(CurrentZone->IsCleared())
+		{
+			//search for next zone
+			
+		}
+		else
+		{
+			//keep clearing current zone
+			FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
+			QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
+		}
+	}
+	else if(UnclearedZones.Num() != 0)
+	{
+		CurrentZone = UnclearedZones.Last();
+		UnclearedZones.Pop();
 
+		FEnvQueryRequest QueryRequest = FEnvQueryRequest(FirstNodeQuery, this);
+		QueryRequest.Execute(EEnvQueryRunMode::SingleResult, agent, &AAgent::NodeQueryFinished);
 		
 	}
+	
+	
 }
 
 

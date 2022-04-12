@@ -50,14 +50,19 @@ void AAgent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AAgent::NodeQueryFinished(TSharedPtr<FEnvQueryResult> Result)
 {
-	FVector ZonePosition = Result->GetItemAsLocation(0);
-	ASightNode* TargetNode = static_cast<ASightNode*>(Result->GetItemAsActor(0));
-	TargetNode->Targeted = true;
+	for(int i = 0; i < Result->Items.Max(); i++)
+	{
+		ASightNode* TargetNode = static_cast<ASightNode*>(Result->GetItemAsActor(0));
+		if(!TargetNode->Targeted)
+		{
+			FVector ZonePosition = Result->GetItemAsLocation(0);
+			TargetNode->Targeted = true;
 	
-	
-	SetTarget(ZonePosition);
-	SetTask(ETasks::MoveToNode);
-	
+			SetTarget(ZonePosition);
+			SetTask(ETasks::MoveToNode);
+			break;
+		}
+	}
 }
 
 void AAgent::SetTarget(FVector& Position)
